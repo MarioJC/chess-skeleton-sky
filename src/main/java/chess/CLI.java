@@ -46,10 +46,25 @@ public class CLI {
         writeOutput("Type 'help' for a list of commands.");
         doNewGame();
 
+        boolean moveDone = false;
         while (true) {
             showBoard();
-            writeOutput(gameState.getCurrentPlayer() + "'s Move");
+            if(moveDone){
+                try {
+                    if(GameUtils.isCheckmate(gameState)){
+                        Player player = gameState.getCurrentPlayer()== Player.White? Player.Black: Player.White;
+                        writeOutput("The game is over.  Congrats to " + player);
+                    } else {
+                        writeOutput(gameState.getCurrentPlayer() + "'s Move");
+                    }
+                } catch (GameStateException e) {
+                    writeOutput("[Error] " + e.getMessage());
+                }
+            } else {
+                writeOutput(gameState.getCurrentPlayer() + "'s Move");
+            }
 
+            moveDone = false;
             String input = getInput();
             if (input == null) {
                 break; // No more input possible; this is the only way to exit the event loop
@@ -66,7 +81,7 @@ public class CLI {
                 } else if (input.equals("list")) {
                     list();
                 } else if (input.startsWith("move")) {
-                    move(input.replaceFirst("^move", ""));
+                    moveDone = move(input.replaceFirst("^move", ""));
                 } else {
                     writeOutput("I didn't understand that.  Type 'help' for a list of commands.");
                 }
@@ -79,16 +94,16 @@ public class CLI {
      *
      * @param from_to parameters are expected to be in the format: {from} {to}
      */
-    private void move(String from_to) {
+    private boolean move(String from_to) {
         // Parse and validate input parameters
         if(from_to == null){
             // TODO issue error message
-            return;
+            return  false;
         } else {
             String[] parts= from_to.trim().split(" +");
             if(parts.length != 2){
                 // TODO issue error message
-                return;
+                return false;
             }
 
             Position from = new Position(parts[0]);
@@ -96,8 +111,10 @@ public class CLI {
 
             try {
                 gameState.move(from, to);
+                return true;
             } catch (GameStateException e) {
                 writeOutput("[Error] " + e.getMessage());
+                return  false;
             }
         }
    }

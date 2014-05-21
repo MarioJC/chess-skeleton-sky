@@ -27,6 +27,7 @@ public class Position {
      * @param colrow The column and row to use.  I.e. "a1", "h7", etc.
      */
     public Position(String colrow) {
+        //TODO - check argument and throw exception if not valid
         this(colrow.toCharArray()[0], Character.digit(colrow.toCharArray()[1], 10));
     }
 

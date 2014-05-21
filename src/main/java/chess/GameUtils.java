@@ -1,5 +1,6 @@
 package chess;
 
+import chess.pieces.Pawn;
 import chess.pieces.Piece;
 
 import java.util.ArrayList;
@@ -39,7 +40,8 @@ public class GameUtils {
                             // TODO - add more logic if needed
                         } else {
                             // Beat a piece of another player
-                            out.add("" + pos + " " + p);
+                            if(!(piece instanceof Pawn))
+                                out.add("" + pos + " " + p);
                         }
                         return false;
                     }
@@ -79,8 +81,8 @@ public class GameUtils {
                             // TODO - add more logic if needed
                         } else {
                             // Beat a piece of another player
-                            //out.add("" + pos + " " + p);
-                            processor.process(piece, pos, p);
+                            if(!(piece instanceof Pawn))
+                                processor.process(piece, pos, p);
                         }
                         return false;
                     }
@@ -94,8 +96,6 @@ public class GameUtils {
     public static boolean isCheckmate(final GameState state) throws GameStateException {
         final GameState.Moving m = state.getLastMoving();
         if (m != null) {
-            Piece lastUpdatePos = state.getPieceAt(m.getTo());
-
             if (isCheck(state, m.getTo())) {
                 // Check is detected, check
                 // 1. Try to hide the King
@@ -119,8 +119,10 @@ public class GameUtils {
 
                 if (!canBeHidden[0]) {
                     // 2. Let the King to escape
-                    // TODO
+                    // TODO - implement me
                 }
+
+                return !canBeHidden[0];
             }
         }
         return false;
