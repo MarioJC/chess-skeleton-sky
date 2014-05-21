@@ -1,6 +1,7 @@
 package chess.pieces;
 
 import chess.Player;
+import chess.Position;
 
 /**
  * The King class
@@ -13,5 +14,10 @@ public class King extends Piece {
     @Override
     protected char getIdentifyingCharacter() {
         return 'k';
+    }
+
+    @Override
+    public void generateSteps(Position p, StepProcessor processor) {
+        // TODO implement me
     }
 }

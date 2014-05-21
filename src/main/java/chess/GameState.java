@@ -4,6 +4,7 @@ package chess;
 import chess.pieces.*;
 
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 
 /**
@@ -100,5 +101,9 @@ public class GameState {
      */
     private void placePiece(Piece piece, Position position) {
         positionToPieceMap.put(position, piece);
+    }
+
+    Iterator<Position> iteratorOverPositions(){
+        return positionToPieceMap.keySet().iterator();
     }
 }

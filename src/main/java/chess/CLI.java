@@ -64,13 +64,21 @@ public class CLI {
                 } else if (input.equals("board")) {
                     writeOutput("Current Game:");
                 } else if (input.equals("list")) {
-                    writeOutput("====> List Is Not Implemented (yet) <====");
+                    list();
+//                    writeOutput("====> List Is Not Implemented (yet) <====");
                 } else if (input.startsWith("move")) {
                     writeOutput("====> Move Is Not Implemented (yet) <====");
                 } else {
                     writeOutput("I didn't understand that.  Type 'help' for a list of commands.");
                 }
             }
+        }
+    }
+
+    private void list() {
+        writeOutput(gameState.getCurrentPlayer() + "'s Possible Moves:");
+        for(String fromTo: GameUtils.list(gameState)){
+            writeOutput("\t" + fromTo);
         }
     }
 
