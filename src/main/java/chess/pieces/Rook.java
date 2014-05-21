@@ -19,7 +19,7 @@ public class Rook extends Piece {
     }
 
     @Override
-    public void generateSteps(Position p, StepProcessor processor) {
+    public void generatePositions(Position p, StepProcessor processor) {
         Position p1 = p;
         do {
             p1 = BoardUtils.up(p1, getOwner());

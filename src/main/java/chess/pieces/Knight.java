@@ -1,5 +1,6 @@
 package chess.pieces;
 
+import chess.BoardUtils;
 import chess.Player;
 import chess.Position;
 
@@ -17,7 +18,77 @@ public class Knight extends Piece {
     }
 
     @Override
-    public void generateSteps(Position p, StepProcessor processor) {
-        // TODO implement me
+    public void generatePositions(Position p, StepProcessor processor) {
+        Position p1 = p;
+        do {
+            if((p1 = BoardUtils.up(p1, getOwner())) == BoardUtils.OUTSIDER) break;
+            if((p1 = BoardUtils.up(p1, getOwner())) == BoardUtils.OUTSIDER) break;
+            if((p1 = BoardUtils.right(p1, getOwner())) == BoardUtils.OUTSIDER) break;
+
+            processor.process(p1);
+        } while(false);
+
+        p1 = p;
+        do {
+            if((p1 = BoardUtils.right(p1, getOwner())) == BoardUtils.OUTSIDER) break;
+            if((p1 = BoardUtils.right(p1, getOwner())) == BoardUtils.OUTSIDER) break;
+            if((p1 = BoardUtils.up(p1, getOwner())) == BoardUtils.OUTSIDER) break;
+
+            processor.process(p1);
+        } while(false);
+
+        p1 = p;
+        do {
+            if((p1 = BoardUtils.right(p1, getOwner())) == BoardUtils.OUTSIDER) break;
+            if((p1 = BoardUtils.right(p1, getOwner())) == BoardUtils.OUTSIDER) break;
+            if((p1 = BoardUtils.down(p1, getOwner())) == BoardUtils.OUTSIDER) break;
+
+            processor.process(p1);
+        } while(false);
+
+        p1 = p;
+        do {
+            if((p1 = BoardUtils.down(p1, getOwner())) == BoardUtils.OUTSIDER) break;
+            if((p1 = BoardUtils.down(p1, getOwner())) == BoardUtils.OUTSIDER) break;
+            if((p1 = BoardUtils.right(p1, getOwner())) == BoardUtils.OUTSIDER) break;
+
+            processor.process(p1);
+        } while(false);
+
+        p1 = p;
+        do {
+            if((p1 = BoardUtils.down(p1, getOwner())) == BoardUtils.OUTSIDER) break;
+            if((p1 = BoardUtils.down(p1, getOwner())) == BoardUtils.OUTSIDER) break;
+            if((p1 = BoardUtils.left(p1, getOwner())) == BoardUtils.OUTSIDER) break;
+
+            processor.process(p1);
+        } while(false);
+
+        p1 = p;
+        do {
+            if((p1 = BoardUtils.left(p1, getOwner())) == BoardUtils.OUTSIDER) break;
+            if((p1 = BoardUtils.left(p1, getOwner())) == BoardUtils.OUTSIDER) break;
+            if((p1 = BoardUtils.down(p1, getOwner())) == BoardUtils.OUTSIDER) break;
+
+            processor.process(p1);
+        } while(false);
+
+        p1 = p;
+        do {
+            if((p1 = BoardUtils.left(p1, getOwner())) == BoardUtils.OUTSIDER) break;
+            if((p1 = BoardUtils.left(p1, getOwner())) == BoardUtils.OUTSIDER) break;
+            if((p1 = BoardUtils.up(p1, getOwner())) == BoardUtils.OUTSIDER) break;
+
+            processor.process(p1);
+        } while(false);
+
+        p1 = p;
+        do {
+            if((p1 = BoardUtils.up(p1, getOwner())) == BoardUtils.OUTSIDER) break;
+            if((p1 = BoardUtils.up(p1, getOwner())) == BoardUtils.OUTSIDER) break;
+            if((p1 = BoardUtils.left(p1, getOwner())) == BoardUtils.OUTSIDER) break;
+
+            processor.process(p1);
+        } while(false);
     }
 }

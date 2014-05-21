@@ -65,9 +65,8 @@ public class CLI {
                     writeOutput("Current Game:");
                 } else if (input.equals("list")) {
                     list();
-//                    writeOutput("====> List Is Not Implemented (yet) <====");
                 } else if (input.startsWith("move")) {
-                    writeOutput("====> Move Is Not Implemented (yet) <====");
+                    move(input.replaceFirst("^move", ""));
                 } else {
                     writeOutput("I didn't understand that.  Type 'help' for a list of commands.");
                 }
@@ -75,6 +74,37 @@ public class CLI {
         }
     }
 
+    /**
+     * Move a piece
+     *
+     * @param from_to parameters are expected to be in the format: {from} {to}
+     */
+    private void move(String from_to) {
+        // Parse and validate input parameters
+        if(from_to == null){
+            // TODO issue error message
+            return;
+        } else {
+            String[] parts= from_to.trim().split(" +");
+            if(parts.length != 2){
+                // TODO issue error message
+                return;
+            }
+
+            Position from = new Position(parts[0]);
+            Position to = new Position(parts[1]);
+
+            try {
+                gameState.move(from, to);
+            } catch (GameStateException e) {
+                writeOutput("[Error] " + e.getMessage());
+            }
+        }
+   }
+
+    /**
+     * List all possible moves for current player
+     */
     private void list() {
         writeOutput(gameState.getCurrentPlayer() + "'s Possible Moves:");
         for(String fromTo: GameUtils.list(gameState)){

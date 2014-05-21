@@ -53,23 +53,51 @@ public class BoardUtils {
     }
 
     public static Position biasNW(Position p, Player owner) {
-        // TODO implement me
-        return OUTSIDER;
+        if (owner == Player.White) {
+            return ( (char)(p.getColumn() - 1) >= Position.MIN_COLUMN) && (p.getRow() + 1 <= Position.MAX_ROW)?
+                    new Position((char)(p.getColumn() - 1), p.getRow()+1) :
+                    OUTSIDER;
+        } else {
+            return ( (char)(p.getColumn() + 1) <= Position.MAX_COLUMN) && (p.getRow() - 1 >= Position.MIN_ROW)?
+                    new Position((char)(p.getColumn() +1), p.getRow() - 1) :
+                    OUTSIDER;
+        }
     }
 
     public static Position biasSW(Position p, Player owner) {
-        // TODO implement me
-        return OUTSIDER;
+        if (owner == Player.White) {
+            return ( (char)(p.getColumn() - 1) >= Position.MIN_COLUMN) && (p.getRow() - 1 >= Position.MIN_ROW)?
+                    new Position((char)(p.getColumn() - 1), p.getRow()-1) :
+                    OUTSIDER;
+        } else {
+            return ( (char)(p.getColumn() + 1) <= Position.MAX_COLUMN) && (p.getRow() + 1 <= Position.MAX_ROW)?
+                    new Position((char)(p.getColumn() +1), p.getRow() +1 ) :
+                    OUTSIDER;
+        }
     }
 
     public static Position biasNE(Position p, Player owner) {
-        // TODO implement me
-        return OUTSIDER;
+        if (owner == Player.White) {
+            return ( (char)(p.getColumn() + 1) <= Position.MAX_COLUMN) && (p.getRow() + 1 <= Position.MAX_ROW)?
+                    new Position((char)(p.getColumn() +1), p.getRow()+1) :
+                    OUTSIDER;
+        } else {
+            return ( (char)(p.getColumn() - 1) >= Position.MIN_COLUMN) && (p.getRow() - 1 >= Position.MIN_ROW)?
+                    new Position((char)(p.getColumn() -1), p.getRow() - 1) :
+                    OUTSIDER;
+        }
     }
 
     public static Position biasSE(Position p, Player owner) {
-        // TODO implement me
-        return OUTSIDER;
+        if (owner == Player.White) {
+            return ( (char)(p.getColumn() + 1) <= Position.MAX_COLUMN) && (p.getRow() - 1 >= Position.MIN_ROW)?
+                    new Position((char)(p.getColumn() +1), p.getRow()-1) :
+                    OUTSIDER;
+        } else {
+            return ( (char)(p.getColumn() - 1) >= Position.MIN_COLUMN) && (p.getRow() + 1 <= Position.MAX_ROW)?
+                    new Position((char)(p.getColumn() -1), p.getRow() + 1) :
+                    OUTSIDER;
+        }
     }
 
 }

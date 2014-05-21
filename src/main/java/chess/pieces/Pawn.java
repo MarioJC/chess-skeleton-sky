@@ -17,7 +17,7 @@ public class Pawn extends Piece {
         return 'p';
     }
 
-    public void generateSteps(Position p, StepProcessor processor){
+    public void generatePositions(Position p, StepProcessor processor){
         Position p1 = BoardUtils.up(p, getOwner());
         if(p1 == BoardUtils.OUTSIDER || !processor.process(p1)){
             return;

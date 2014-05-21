@@ -21,13 +21,19 @@ public class GameState {
     /**
      * A map of board positions to pieces at that position
      */
-    private Map<Position, Piece> positionToPieceMap;
+    private Map<Position, Piece> positionToPieceMap = new HashMap<Position, Piece>();
 
     /**
      * Create the game state.
      */
     public GameState() {
-        positionToPieceMap = new HashMap<Position, Piece>();
+    }
+
+    public GameState(GameState beingCloned) {
+        this.currentPlayer = beingCloned.getCurrentPlayer();
+        for(Map.Entry<Position, Piece> e: beingCloned.positionToPieceMap.entrySet()){
+            positionToPieceMap.put(e.getKey(), e.getValue());
+        }
     }
 
     public Player getCurrentPlayer() {
@@ -106,4 +112,81 @@ public class GameState {
     Iterator<Position> iteratorOverPositions(){
         return positionToPieceMap.keySet().iterator();
     }
+
+    public void move(final Position from, final Position to) throws GameStateException {
+        final Piece pFrom = getPieceAt(from);
+        if(pFrom == null){
+            throw new GameStateException("Piece not found at the position: [" + from + "]");
+        }
+        Piece pTo = getPieceAt(to);
+        if(pTo != null){
+            if(pTo.getOwner() == pFrom.getOwner()){
+                throw new GameStateException("Cannot move a piece [" + from + "] to the occupied position: [" + to + "]");
+            } else {
+                // It looks like an opponent piece is about to get beat
+            }
+        }
+
+        positionToPieceMap.put(to, pFrom);
+        positionToPieceMap.remove(from);
+        lastMoving = new MovingImpl(pFrom.getOwner(), from, to, pTo);
+        currentPlayer = currentPlayer == Player.White? Player.Black: Player.White;
+    }
+
+
+    private Moving lastMoving = null;
+
+    public Moving getLastMoving(){
+        return lastMoving;
+    }
+
+    public Position getKingPositionFor(Player player) throws GameStateException {
+        for(Map.Entry<Position, Piece> e: positionToPieceMap.entrySet()){
+            if(e.getValue() instanceof King && e.getValue().getOwner() == player){
+                return e.getKey();
+            }
+        }
+        throw new GameStateException("King not found! Player: " + player);
+    }
+
+    public interface Moving {
+        Player doneBy();
+        Position getFrom();
+        Position getTo();
+        Piece getBeaten();
+    }
+
+    private class MovingImpl implements Moving {
+
+        private Player player;
+        private Position from, to;
+        private Piece beaten;
+
+        public MovingImpl(Player player, Position from, Position to, Piece beaten){
+            this.player = player;
+            this.from = from;
+            this.to = to;
+            this.beaten = beaten;
+        }
+        @Override
+        public Player doneBy() {
+            return player;
+        }
+
+        @Override
+        public Position getFrom() {
+            return from;
+        }
+
+        @Override
+        public Position getTo() {
+            return to;
+        }
+
+        @Override
+        public Piece getBeaten() {
+            return beaten;
+        }
+    }
+
 }

@@ -1,5 +1,6 @@
 package chess.pieces;
 
+import chess.BoardUtils;
 import chess.Player;
 import chess.Position;
 
@@ -17,7 +18,16 @@ public class King extends Piece {
     }
 
     @Override
-    public void generateSteps(Position p, StepProcessor processor) {
-        // TODO implement me
+    public void generatePositions(Position p, StepProcessor processor) {
+        Position p1;
+        if((p1 = BoardUtils.up(p, getOwner())) != BoardUtils.OUTSIDER) processor.process(p1);
+        if((p1 = BoardUtils.down(p, getOwner())) != BoardUtils.OUTSIDER) processor.process(p1);
+        if((p1 = BoardUtils.left(p1, getOwner())) != BoardUtils.OUTSIDER) processor.process(p1);
+        if((p1 = BoardUtils.right(p1, getOwner())) != BoardUtils.OUTSIDER) processor.process(p1);
+
+        if((p1 = BoardUtils.biasNW(p, getOwner())) != BoardUtils.OUTSIDER) processor.process(p1);
+        if((p1 = BoardUtils.biasNE(p, getOwner())) != BoardUtils.OUTSIDER) processor.process(p1);
+        if((p1 = BoardUtils.biasSW(p1, getOwner())) != BoardUtils.OUTSIDER) processor.process(p1);
+        if((p1 = BoardUtils.biasSE(p1, getOwner())) != BoardUtils.OUTSIDER) processor.process(p1);
     }
 }
